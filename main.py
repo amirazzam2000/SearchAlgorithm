@@ -6,7 +6,10 @@ import timeit
 def main():
 
     while True:
+        print("choose a dataset: ")
         cities, connections = parse_data()
+        if cities is None:
+            continue
         city1 = input("What is your starting city? ")
         if city1 not in cities:
             print("the city ", city1, " is not in the data set")

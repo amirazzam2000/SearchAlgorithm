@@ -1,12 +1,17 @@
+from itertools import tee
+
+
 class AStar:
 
     def __init__(self, cities: dict, connections: dict):
         self.cities = cities
         self.connections = connections
 
+
     def find_minimum_distance(self, start, end):
         future = []
         visited = []
+
 
         self.cities[start].add_coming_from([])
         self.cities[start].weighted_distance = 0
@@ -54,9 +59,20 @@ class AStar:
         return None
 
     def printResults(self, results):
+        total_distance = 0
+        for i, j in pairwise(results):
+            total_distance += self.connections[i.name, j.name]['distance']
+
+        print("total distance: ", total_distance, "m")
+
         if results is not None:
             for s in results:
                 print(s.name)
         else:
             print("there isn't a path to that city from where you are!")
 
+
+def pairwise(iterable):
+    a, b = tee(iterable)
+    next(b, None)
+    return zip(a, b)
