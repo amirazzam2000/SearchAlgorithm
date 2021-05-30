@@ -36,10 +36,11 @@ def parse_data():
                 cities[city['name']] = City(city['name'], city['address'], city['country'], city['latitude'], city['longitude'])
 
             for connection in data['connections']:
-                weight = {'distance': connection['distance'], 'duration':  connection['duration']}
-                connections[(connection['from'], connection['to'])] = weight
+                if connection['from'] != connection['to']:
+                    weight = {'distance': connection['distance'], 'duration':  connection['duration']}
+                    connections[(connection['from'], connection['to'])] = weight
 
-                cities[connection['from']].add_next(cities[connection['to']], weight)
+                    cities[connection['from']].add_next(cities[connection['to']], weight)
 
         return cities, connections
     else:
